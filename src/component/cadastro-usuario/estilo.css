@@ -1,0 +1,25 @@
+.formulario {
+    margin: 20px auto;
+    display: grid;
+    width: 500px;
+}
+
+.formulario input {
+    border-radius: 15px;
+    padding-left: 15px;
+}
+
+*:focus {
+    outline: 0 !important;
+}
+
+.btnCadastrar {
+    width: 50%;
+    margin: 20px auto;
+    border-radius: 20px;
+    outline: none;
+}
+
+.formulario label {
+    margin-top: 10px;
+}
