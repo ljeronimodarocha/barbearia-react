@@ -1,26 +1,25 @@
 export default class Usuario {
-    constructor() {
 
-    }
 
     header = {
         'Content-type': 'application/json'
     }
-    cadastrar(usuario) {
+    async cadastrar(nome, email, sexo, funcao, senha) {
         const json = JSON.stringify({
-            nome: usuario.nome,
-            email: usuario.email,
-            senha: usuario.senha,
+            nome: nome,
+            email: email,
+            sexo: sexo,
+            funcao: funcao,
+            senha: senha,
         })
-        return fetch('http://localhost:3000/usuarios', {
+        return await fetch('http://localhost:3000/usuarios', {
                 method: 'POST',
                 headers: this.header,
                 body: json
             })
-            .then(resp => {
-                return resp.body;
-            }).catch((err) => {
-                console.log(err);
+            .then(json)
+            .then((data) => {
+                return data;
             })
     }
 
