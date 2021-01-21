@@ -42,7 +42,7 @@ class FormularioUsuairo extends Component {
         const usuario = new Usuario();
         let res = await  usuario.cadastrar(this.nome, this.email, this.sexo, this.funcao, this.senha)
         event.target.reset();
-        console.log(res);
+       
     }
     state = {}
     render() {
