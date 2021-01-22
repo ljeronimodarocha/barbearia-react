@@ -1,11 +1,15 @@
-const axios = require('axios').default;
+const axios = require('axios');
 
 export default class Usuario {
 
-
     header = {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
     }
+    instance = axios.create({
+        baseURL: 'http://localhost:3000/',
+        //timeout: 10000000,
+        //headers: this.header,
+    })
     async cadastrar(nome, email, sexo, funcao, senha) {
             const json = JSON.stringify({
                 nome: nome,
@@ -14,7 +18,7 @@ export default class Usuario {
                 funcao: funcao,
                 senha: senha,
             })
-            return await fetch('http://localhost:3000/usuarios', {
+            return await this.instance.post('usuarios', {
                     method: 'POST',
                     headers: this.header,
                     body: json
@@ -34,21 +38,23 @@ export default class Usuario {
         //             headers: this.header,
         //             body: json
         //         })
-        //         .then((response) => { return response })
+        //         .then((response) => {
+        //             return response
+        //         })
 
     // }
 
+
     async login(email, senha) {
-        return await axios.post('http://localhost:3000/usuario/login', {
-            email: email,
-            senha: senha
-        }).then(function(response) {
-            console.log(response);
-            return response;
-        }).catch((error) => {
-            console.log(error);
-            return error;
-        })
+        return await this.instance.post('usuario/login', {
+                email: email,
+                senha: senha,
+            }).then((res) => {
+                return res
+            })
+            .catch((error) => {
+                return error;
+            })
     }
 
 }

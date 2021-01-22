@@ -10,7 +10,7 @@ class FormularioUsuairo extends Component {
         this.sexo = "";
         this.funcao = "";
         this.senha = "";
-        let currentValue = props.curentValue || "mascolino";
+        //let currentValue = props.curentValue || "mascolino";
     }
 
     _handleMudancaNome(event) {
@@ -41,6 +41,7 @@ class FormularioUsuairo extends Component {
         event.preventDefault();
         const usuario = new Usuario();
         let res = await  usuario.cadastrar(this.nome, this.email, this.sexo, this.funcao, this.senha)
+        console.log(res);
         event.target.reset();
        
     }

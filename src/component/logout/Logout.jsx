@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 
 class Logout extends Component {
-    state = {}
+    constructor(props){
+        super(props)
+        localStorage.removeItem('jwt')
+    }
+
     render() {
         return (<>Logout</>);
     }

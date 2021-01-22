@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import Usuario from '../../api/usuario';
 import './Login.css'
+//import  { Redirect } from 'react-router-dom'
+
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.email = "";
         this.senha = "";
+        
     }
 
     _handleMudancaEmail(event) {
@@ -20,12 +23,14 @@ class Login extends Component {
     async _handleLogin(event){
         event.preventDefault();
         const usuario = new Usuario();
-        console.log(this.email);
-        console.log(this.senha);
         let res = await usuario.login(this.email, this.senha);
-        console.log(res.Headers);
+        if(res.status === 200){
+            localStorage.setItem('jwt', res.data['token'])
+            this.props.logadoChange();
+        }
     }
     render() {
+       
         return (
             <section>
                 <form action="" className="formulario" onSubmit={this._handleLogin.bind(this)}>
