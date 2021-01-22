@@ -29,25 +29,26 @@ class App extends Component {
             <section className="container">
                 <Router>
                     <Header logado={this.state.logado} />
-                    <Switch>
-                        <Route path="/sobre">
-                        </Route>
-                        {!this.state.logado &&
+                    {!this.state.logado &&
+                        <Switch>
+                            <Route path="/sobre">
+                            </Route>
                             <Route path="/login">
                                 <Login logadoChange={this.handleLogadoChange} />
                             </Route>
-                        }
-                        {!this.state.logado &&
                             <Route path="/registrar">
                                 <FormularioUsuairo />
                             </Route>
-                        }
-                        {this.state.logado &&
+
+                        </Switch>
+                    }
+                    {this.state.logado &&
+                        <Switch>
                             <Route path="/logout">
                                 <Logout />
                             </Route>
-                        }
-                    </Switch>
+                        </Switch>
+                    }
                 </Router>
             </section>
         )
