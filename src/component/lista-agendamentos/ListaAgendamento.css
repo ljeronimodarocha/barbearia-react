@@ -1,0 +1,7 @@
+.tabela-lista-agendamento {
+    width: 100%;
+}
+
+.tabela-lista-agendamento>th {
+    text-align: center;
+}

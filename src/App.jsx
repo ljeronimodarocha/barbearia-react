@@ -5,10 +5,11 @@ import Logout from './component/logout/Logout'
 import Header from './component/header/Header'
 import FormularioUsuairo from './component/cadastro-usuario/Formulario-usuario'
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
+    BrowserRouter,
 } from "react-router-dom";
+import ListaAgendamentos from './component/lista-agendamentos/ListaAgendamentos';
 
 class App extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class App extends Component {
     render() {
         return (
             <section className="container">
-                <Router>
+                <BrowserRouter>
                     <Header logado={this.state.logado} />
                     {!this.state.logado &&
                         <Switch>
@@ -45,11 +46,15 @@ class App extends Component {
                     {this.state.logado &&
                         <Switch>
                             <Route path="/logout">
-                                <Logout />
+                                <Logout logadoChange={this.handleLogadoChange} />
+                            </Route>
+                            <Route path="/agendamentos">
+
+                                <ListaAgendamentos/>
                             </Route>
                         </Switch>
                     }
-                </Router>
+                </BrowserRouter>
             </section>
         )
 

@@ -22,6 +22,7 @@ class Header
                     {this.props.logado &&
                         <>
                             <li><Link to="/logout">Logout</Link></li>
+                            <li><Link to="/agendamentos">Agendamentos</Link></li>
                         </>
                     }
                 </ul>
