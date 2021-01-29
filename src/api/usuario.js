@@ -7,6 +7,7 @@ export default class Usuario {
     }
     instance = axios.create({
         baseURL: 'http://localhost:3000/',
+        withCredentials: true,
         //timeout: 10000000,
         //headers: this.header,
     })
@@ -23,7 +24,6 @@ export default class Usuario {
                     headers: this.header,
                     body: json
                 })
-                .then(json)
                 .then((data) => {
                     return data;
                 })

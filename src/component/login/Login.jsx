@@ -24,7 +24,8 @@ class Login extends Component {
         event.preventDefault();
         const usuario = new Usuario();
         let res = await usuario.login(this.email, this.senha);
-        if(res.status === 200){
+        console.log(res);
+        if(res.status === 204){
             localStorage.setItem('jwt', res.data['token'])
             this.props.logadoChange();
         }

@@ -50,7 +50,7 @@ class App extends Component {
                             </Route>
                             <Route path="/agendamentos">
 
-                                <ListaAgendamentos/>
+                                <ListaAgendamentos />
                             </Route>
                         </Switch>
                     }
