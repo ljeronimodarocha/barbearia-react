@@ -16,7 +16,11 @@ export default class Agendamento {
             header: this.header
         }).then(res => {
             return res.data;
+        }).catch(function(error) {
+            console.log("Erro de merda" + error);
+            return error;
         })
+
     }
 
 }

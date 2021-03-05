@@ -10,6 +10,7 @@ import {
     BrowserRouter,
 } from "react-router-dom";
 import ListaAgendamentos from './component/lista-agendamentos/ListaAgendamentos';
+import FormulariohorarioFuncionamento from './component/horarioFuncionamento/FormulariohorarioFuncionamento';
 
 class App extends Component {
     constructor(props) {
@@ -51,6 +52,9 @@ class App extends Component {
                             <Route path="/agendamentos">
 
                                 <ListaAgendamentos />
+                            </Route>
+                            <Route path="/horario-funcionamento">
+                                <FormulariohorarioFuncionamento/>
                             </Route>
                         </Switch>
                     }

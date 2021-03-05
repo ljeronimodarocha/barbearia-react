@@ -11,7 +11,8 @@ class ListaAgendamentos extends Component {
     async componentDidMount() {
         let a = new Agendamento()
         this.setState({ lista: await a.listaAgendamentos() })
-        console.log(this.state.lista);
+        
+       
     }
     render() {
         {
