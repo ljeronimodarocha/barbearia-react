@@ -14,11 +14,8 @@ export default class Agendamento {
     async listaAgendamentos() {
         return await this.instance.get('agendamentos', {
             header: this.header
-        }).then(res => {
+        }).then((res) => {
             return res.data;
-        }).catch(function(error) {
-            console.log("Erro de merda" + error);
-            return error;
         })
 
     }

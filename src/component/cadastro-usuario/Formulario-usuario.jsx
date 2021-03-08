@@ -7,9 +7,10 @@ class FormularioUsuairo extends Component {
         super(props)
         this.nome = "";
         this.email = "";
-        this.sexo = "";
-        this.funcao = "";
+        this.sexo = "M";
+        this.tipo = "";
         this.senha = "";
+        this.state = { erros: '' }
         //let currentValue = props.curentValue || "mascolino";
     }
 
@@ -28,7 +29,7 @@ class FormularioUsuairo extends Component {
     }
     _handleMudancaFuncao(event) {
         event.stopPropagation();
-        this.funcao = event.target.value;
+        this.tipo = event.target.value;
     }
     _handleMudancaSenha(event) {
         event.stopPropagation();
@@ -40,31 +41,43 @@ class FormularioUsuairo extends Component {
     async _handleSubmit(event) {
         event.preventDefault();
         const usuario = new Usuario();
-        let res = await  usuario.cadastrar(this.nome, this.email, this.sexo, this.funcao, this.senha)
-        console.log(res);
-        event.target.reset();
-       
+        try {
+            await usuario.cadastrar(this.nome, this.email, this.sexo, this.tipo, this.senha)
+        } catch (error) {
+            if (error.response) {
+              
+                this.setState({ erros:error.response.data })
+
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+        }
+                
     }
-    state = {}
+    
     render() {
         return (
-            <form onSubmit={this._handleSubmit.bind(this)} className="formulario">
-                <label htmlFor="nome">Nome</label>
-                <input type="text" id="nome" onChange={this._handleMudancaNome.bind(this)}/>
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" onChange={this._handleMudancaEmail.bind(this)} />
-                <label htmlFor="sexo">Sexo</label>
-                <select id="sexo"  required onChange={this._handleMudancaSexo.bind(this)} >
-                    
-                    <option value="mascolino">Mascolino</option>
-                    <option value="feminino">Feminino</option>
-                </select>
-                <label htmlFor="funcao">funcao</label>
-                <input type="text" id="funcao" onChange={this._handleMudancaFuncao.bind(this)} />
-                <label htmlFor="senha">Senha</label>
-                <input type="password" id="senha" onChange={this._handleMudancaSenha.bind(this)} />
-                <button className="btnCadastrar" >Cadastrar</button>
-            </form>
+            <>
+
+                <form onSubmit={this._handleSubmit.bind(this)} className="formulario">
+                    <label htmlFor="nome">Nome</label>
+                    <input type="text" id="nome" onChange={this._handleMudancaNome.bind(this)} />
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" onChange={this._handleMudancaEmail.bind(this)} />
+                    <label htmlFor="sexo">Sexo</label>
+                    <select id="sexo" required onChange={this._handleMudancaSexo.bind(this)} >
+                        <option value="M">Mascolino</option>
+                        <option value="F">Feminino</option>
+                    </select>
+                    <label htmlFor="funcao">funcao</label>
+                    <input type="text" id="funcao" onChange={this._handleMudancaFuncao.bind(this)} />
+                    <label htmlFor="senha">Senha</label>
+                    <input type="password" id="senha" onChange={this._handleMudancaSenha.bind(this)} />
+                    <button className="btnCadastrar" >Cadastrar</button>
+                </form>
+            </>
         );
     }
 }

@@ -9,40 +9,27 @@ export default class Usuario {
         baseURL: 'http://localhost:3000/',
         withCredentials: true,
         //timeout: 10000000,
-        //headers: this.header,
+        headers: this.header,
     })
-    async cadastrar(nome, email, sexo, funcao, senha) {
-            const json = JSON.stringify({
+    async cadastrar(nome, email, sexo, tipo, senha) {
+        const usuario = JSON.stringify({
+            nome: nome,
+            email: email,
+            sexo: sexo,
+            tipo: tipo,
+            senha: senha,
+        })
+        return await this.instance.post('usuarios', {
                 nome: nome,
                 email: email,
                 sexo: sexo,
-                funcao: funcao,
+                tipo: tipo,
                 senha: senha,
             })
-            return await this.instance.post('usuarios', {
-                    method: 'POST',
-                    headers: this.header,
-                    body: json
-                })
-                .then((data) => {
-                    return data;
-                })
-        }
-        // async login(email, senha) {
-        //     const json = JSON.stringify({
-        //         email: email,
-        //         senha: senha,
-        //     })
-        //     return await fetch('http://localhost:3000/usuario/login', {
-        //             method: 'POST',
-        //             headers: this.header,
-        //             body: json
-        //         })
-        //         .then((response) => {
-        //             return response
-        //         })
-
-    // }
+            .then(function(response) {
+                return response;
+            })
+    }
 
 
     async login(email, senha) {

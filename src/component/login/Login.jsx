@@ -26,7 +26,7 @@ class Login extends Component {
         let res = await usuario.login(this.email, this.senha);
         console.log(res);
         if(res.status === 204){
-            localStorage.setItem('jwt', res.data['token'])
+            localStorage.setItem('jwt', res.headers['authorization'])
             this.props.logadoChange();
         }
     }
