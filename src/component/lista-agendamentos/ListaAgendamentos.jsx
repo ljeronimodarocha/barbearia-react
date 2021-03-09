@@ -9,9 +9,9 @@ class ListaAgendamentos extends Component {
         this.state = { lista: [], erros: [] }
     }
     async componentDidMount() {
-        const a = new Agendamento();
+        const agendamento = new Agendamento();
         try {
-            const lista = await a.listaAgendamentos();
+            const lista = await agendamento.listaAgendamentos();
             this.setState({ lista: lista })
         } catch (error) {
             if (error.response) {
