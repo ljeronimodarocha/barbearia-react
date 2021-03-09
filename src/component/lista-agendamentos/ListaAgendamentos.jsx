@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Agendamento from '../../api/agendamento';
 import './ListaAgendamento.css';
+import Alert from '@material-ui/lab/Alert';
 
 class ListaAgendamentos extends Component {
     constructor(props) {
@@ -12,19 +13,20 @@ class ListaAgendamentos extends Component {
         try {
             const lista = await a.listaAgendamentos();
             this.setState({ lista: lista })
-
         } catch (error) {
-            console.log('====================================');
-            console.log(error.response);
-            console.log('====================================');
-            this.setState({ erros: error.response.data })
+            if (error.response) {
+                this.setState({ erros: error.response.data })
+            } else if (error.request) {
+                this.setState({ erros: error.request })
+            } else {
+                this.setState({ erros: error })
+            }
         }
     }
     render() {
+
         return <div className="container">
-            {this.state.erros &&
-                <div>{this.state.erros}</div>
-            }
+            <><Alert severity="error">{this.state.erros}</Alert></>
             <table className="tabela-lista-agendamento ">
                 <thead>
                     <tr>

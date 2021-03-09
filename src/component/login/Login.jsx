@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Usuario from '../../api/usuario';
 import './Login.css'
+import Alert from '@material-ui/lab/Alert';
 //import  { Redirect } from 'react-router-dom'
 
 
@@ -9,7 +10,7 @@ class Login extends Component {
         super(props);
         this.email = "";
         this.senha = "";
-        
+        this.state = { erros: {} }
     }
 
     _handleMudancaEmail(event) {
@@ -20,25 +21,42 @@ class Login extends Component {
         event.stopPropagation();
         this.senha = event.target.value;
     }
-    async _handleLogin(event){
+    async _handleLogin(event) {
         event.preventDefault();
         const usuario = new Usuario();
-        let res = await usuario.login(this.email, this.senha);
-        console.log(res);
-        if(res.status === 204){
+        try {
+            const res = await usuario.login(this.email, this.senha);
             localStorage.setItem('jwt', res.headers['authorization'])
             this.props.logadoChange();
+        } catch (error) {
+            if (error.response) {
+                this.setState({ erros: error.response.data })
+
+            } else if (error.request) {
+                this.setState({ erros: error.request })
+            } else {
+                this.setState({ erros: error })
+            }
         }
+
     }
     render() {
-       
+        const a = [];
+        for (const key in this.state.erros) {
+            a.push(this.state.erros[key])
+        }
         return (
             <section>
+                {a.map((value) => {
+                    return (
+                        <><Alert severity="error">{value}</Alert></>
+                    );
+                })}
                 <form action="" className="formulario" onSubmit={this._handleLogin.bind(this)}>
                     <label htmlFor="email">Email: </label>
-                    <input type="email" id="email" onChange={this._handleMudancaEmail.bind(this)}/>
+                    <input type="email" id="email" onChange={this._handleMudancaEmail.bind(this)} />
                     <label htmlFor="senha">Senha</label>
-                    <input type="password" id="senha" onChange={this._handleMudancaSenha.bind(this)}/>
+                    <input type="password" id="senha" onChange={this._handleMudancaSenha.bind(this)} />
                     <button className="btnLogin">Logar</button>
                 </form>
             </section>

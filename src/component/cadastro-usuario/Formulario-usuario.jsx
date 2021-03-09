@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Usuario from '../../api/usuario';
 import "./estilo.css";
+import Alert from '@material-ui/lab/Alert';
+
+
 
 class FormularioUsuairo extends Component {
     constructor(props) {
@@ -10,7 +13,7 @@ class FormularioUsuairo extends Component {
         this.sexo = "M";
         this.tipo = "";
         this.senha = "";
-        this.state = { erros: '' }
+        this.state = { erros: {} }
         //let currentValue = props.curentValue || "mascolino";
     }
 
@@ -45,8 +48,8 @@ class FormularioUsuairo extends Component {
             await usuario.cadastrar(this.nome, this.email, this.sexo, this.tipo, this.senha)
         } catch (error) {
             if (error.response) {
-              
-                this.setState({ erros:error.response.data })
+
+                this.setState({ erros: error.response.data })
 
             } else if (error.request) {
                 console.log(error.request);
@@ -54,13 +57,21 @@ class FormularioUsuairo extends Component {
                 console.log('Error', error.message);
             }
         }
-                
+
     }
-    
+
     render() {
+        const a = [];
+        for (const key in this.state.erros) {
+            a.push(this.state.erros[key])
+        }
         return (
             <>
-
+                {a.map((value) => {
+                    return (
+                        <><Alert severity="error">{value}</Alert></>
+                    );
+                })}
                 <form onSubmit={this._handleSubmit.bind(this)} className="formulario">
                     <label htmlFor="nome">Nome</label>
                     <input type="text" id="nome" onChange={this._handleMudancaNome.bind(this)} />

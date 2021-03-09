@@ -12,13 +12,6 @@ export default class Usuario {
         headers: this.header,
     })
     async cadastrar(nome, email, sexo, tipo, senha) {
-        const usuario = JSON.stringify({
-            nome: nome,
-            email: email,
-            sexo: sexo,
-            tipo: tipo,
-            senha: senha,
-        })
         return await this.instance.post('usuarios', {
                 nome: nome,
                 email: email,
@@ -34,14 +27,12 @@ export default class Usuario {
 
     async login(email, senha) {
         return await this.instance.post('usuario/login', {
-                email: email,
-                senha: senha,
-            }).then((res) => {
-                return res
-            })
-            .catch((error) => {
-                return error;
-            })
+            email: email,
+            senha: senha,
+        }).then((res) => {
+            return res
+        })
+
     }
 
 }
