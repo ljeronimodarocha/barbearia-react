@@ -3,7 +3,7 @@ const axios = require('axios');
 export default class Agendamento {
     header = {
         'Content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
     }
     instance = axios.create({
         baseURL: 'http://localhost:3000/',

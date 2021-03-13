@@ -13,20 +13,34 @@ class ListaAgendamentos extends Component {
         try {
             const lista = await agendamento.listaAgendamentos();
             this.setState({ lista: lista })
+
         } catch (error) {
             if (error.response) {
                 this.setState({ erros: error.response.data })
+                console.log(error.response);
+                if (error.response.status == '401') {
+                    sessionStorage.clear();
+                    this.props.logadoChange();
+                }
             } else if (error.request) {
                 this.setState({ erros: error.request })
             } else {
                 this.setState({ erros: error })
             }
+
         }
     }
     render() {
-
+        const a = [];
+        for (const key in this.state.erros) {
+            a.push(this.state.erros[key])
+        }
         return <div className="container">
-            <><Alert severity="error">{this.state.erros}</Alert></>
+            {a.map((value) => {
+                return (
+                    <><Alert severity="error">{value}</Alert></>
+                );
+            })}
             <table className="tabela-lista-agendamento ">
                 <thead>
                     <tr>

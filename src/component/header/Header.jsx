@@ -23,6 +23,7 @@ class Header
                         <>
                             <li><Link to="/logout">Logout</Link></li>
                             <li><Link to="/agendamentos">Agendamentos</Link></li>
+                            <li><Link to="/tipos">Tipos</Link></li>
                         </>
                     }
                 </ul>

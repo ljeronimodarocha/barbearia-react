@@ -4,6 +4,7 @@ import Login from './component/login/Login';
 import Logout from './component/logout/Logout'
 import Header from './component/header/Header'
 import FormularioUsuairo from './component/cadastro-usuario/Formulario-usuario'
+import FormularioTipos from './component/tiposAgendamento/FormularioTipos'
 import {
     Switch,
     Route,
@@ -17,14 +18,21 @@ class App extends Component {
         super(props)
         this.handleLogadoChange = this.handleLogadoChange.bind(this);
         this.state = {
-            logado: localStorage.getItem('jwt')
+            logado: false
         }
+       
     }
-    handleLogadoChange(valor) {
+    handleLogadoChange() {
         this.setState({
-            logado: localStorage.getItem('jwt')
+            logado: !this.state.logado
+        })
+
+    }
+    componentDidMount(){
+        const jwt = sessionStorage.getItem('jwt');
+        if (jwt !== null) {
+            this.setState({ logado: true })
         }
-        )
     }
     render() {
         return (
@@ -49,12 +57,14 @@ class App extends Component {
                             <Route path="/logout">
                                 <Logout logadoChange={this.handleLogadoChange} />
                             </Route>
-                            <Route path="/agendamentos">
-
-                                <ListaAgendamentos />
+                            <Route path="/agendamentos" >
+                                <ListaAgendamentos logadoChange={this.handleLogadoChange} />
                             </Route>
                             <Route path="/horario-funcionamento">
-                                <FormulariohorarioFuncionamento/>
+                                <FormulariohorarioFuncionamento logadoChange={this.handleLogadoChange} />
+                            </Route>
+                            <Route path="/tipos">
+                                <FormularioTipos logadoChange={this.handleLogadoChange}/>
                             </Route>
                         </Switch>
                     }

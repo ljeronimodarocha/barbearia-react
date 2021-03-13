@@ -6,12 +6,15 @@ class Logout extends Component {
         super(props)
         localStorage.clear(); //for localStorage
         sessionStorage.clear(); //for sessionStorage
+
     }
-
-
-    render() {
+    componentDidMount() {
         this.props.logadoChange();
         return (<Redirect to="/login" />);
+    }
+
+    render() {
+        return (<></>)
     }
 }
 

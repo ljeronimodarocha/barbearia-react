@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Usuario from '../../api/usuario';
 import './Login.css'
 import Alert from '@material-ui/lab/Alert';
-//import  { Redirect } from 'react-router-dom'
+import  { Redirect } from 'react-router-dom'
 
 
 class Login extends Component {
@@ -26,19 +26,18 @@ class Login extends Component {
         const usuario = new Usuario();
         try {
             const res = await usuario.login(this.email, this.senha);
-            localStorage.setItem('jwt', res.headers['authorization'])
+            sessionStorage.setItem('jwt', res.headers['authorization'])
             this.props.logadoChange();
+            return <Redirect to='/agendamentos'  />
         } catch (error) {
             if (error.response) {
                 this.setState({ erros: error.response.data })
-
             } else if (error.request) {
                 this.setState({ erros: error.request })
             } else {
                 this.setState({ erros: error })
             }
         }
-
     }
     render() {
         const a = [];
