@@ -2,8 +2,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 20px auto;
 }
 
 .tabela {
     margin: 20px auto;
+}
+
+.btn-cadastrar {
+    width: 100%;
 }

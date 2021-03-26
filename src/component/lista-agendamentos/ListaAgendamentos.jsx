@@ -18,7 +18,7 @@ class ListaAgendamentos extends Component {
             if (error.response) {
                 this.setState({ erros: error.response.data })
                 console.log(error.response);
-                if (error.response.status == '401') {
+                if (error.response.status === 401) {
                     sessionStorage.clear();
                     this.props.logadoChange();
                 }

@@ -18,5 +18,11 @@ export default class horarios {
         })
 
     }
+    async cadastraHorarios(dataInicial, dataFinal) {
+        return await this.instance.post('horarios', {
+            dataInicial,
+            dataFinal
+        })
+    }
 
 }

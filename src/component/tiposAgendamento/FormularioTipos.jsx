@@ -50,7 +50,7 @@ function FormularioTipos(props) {
         } catch (error) {
             if (error.response) {
                 setErros(error.response.data)
-                if (error.response.status == '401') {
+                if (error.response.status === 401) {
                     sessionStorage.clear();
                     props.logadoChange();
                 }
@@ -65,10 +65,11 @@ function FormularioTipos(props) {
     }
 
     useEffect(async () => {
-        if (tipos === '' && erros === '') {
-            await listaTipos()
+        async function lista() {
+            await listaTipos();
         }
-    })
+        lista();
+    }, [])
     const a = [];
     for (const key in erros) {
         a.push(erros[key])
