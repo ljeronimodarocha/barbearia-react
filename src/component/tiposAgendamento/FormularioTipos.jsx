@@ -3,6 +3,7 @@ import Tipo from '../../api/tipo';
 import { TextField, Container, Box, Button } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
 import Alert from '@material-ui/lab/Alert';
+import moment from 'moment'
 
 import './FormularioTipos.css'
 
@@ -18,30 +19,38 @@ function FormularioTipos(props) {
         {
 
             field: 'tempo',
-            headerName: 'Tempo',
-            type: 'number',
+            headerName: 'Horas',
+            valueGetter: (date) => {
+                var hours = Math.floor(date.value / 60);
+                var minutes = date.value % 60;
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            },
         },
     ]
     const enviarFormulario = async (e) => {
         e.preventDefault();
         try {
-            await tipo.cadastrar(nome, tempo)
-            listaTipos()
+            await tipo.cadastrar(nome, tempo);
+            listaTipos();
+            setNome('');
+            setTempo('');
+            setErros('');
         } catch (error) {
             if (error.response) {
                 setErros(error.response.data)
-                console.log(error.response.erro);
+                if (error.response.status === 401) {
+                    sessionStorage.clear();
+                    props.logadoChange();
+                }
             } else if (error.request) {
                 setErros(error.request)
-                console.log(error.request);
+
             } else {
                 setErros(error)
             }
-            console.log(erros);
         }
         setNome("");
         setTempo(0);
-        setErros('')
     }
     const listaTipos = async () => {
         try {
@@ -75,32 +84,33 @@ function FormularioTipos(props) {
         a.push(erros[key])
     }
     return (
-        <div>
+        <Container maxWidth="sm">
             {erros !== '' &&
                 a.map((value) => {
                     return (
+
                         <><Alert severity="error">{value}</Alert></>
                     );
                 })
             }
-            <Container maxWidth="sm">
-                <form action="" onSubmit={e => { enviarFormulario(e) }}>
-                    <Box className="caixas">
-                        <TextField id="Nome" fullWidth label="Tipo" value={nome} type="text" variant="outlined" onChange={e => setNome(e.target.value)} />
-                    </Box>
-                    <Box className="caixas">
-                        <TextField id="Tempo" fullWidth label="Tempo" value={tempo} type="number" variant="outlined" onChange={e => setTempo(e.target.value)} />
-                    </Box>
-                    <Button type="submit" variant="contained" color="primary">
-                        Cadastrar
+
+            <form action="" onSubmit={e => { enviarFormulario(e) }}>
+                <Box className="caixas">
+                    <TextField id="Nome" fullWidth label="Tipo" value={nome} type="text" variant="outlined" onChange={e => setNome(e.target.value)} />
+                </Box>
+                <Box className="caixas">
+                    <TextField id="Tempo" fullWidth label="Tempo" value={tempo} type="number" variant="outlined" onChange={e => setTempo(e.target.value)} />
+                </Box>
+                <Button type="submit" variant="contained" color="primary">
+                    Cadastrar
                 </Button>
-                </form>
-                {tipos !== '' &&
-                    <div className="tabela">
-                        <DataGrid rows={tipos} columns={columns} autoHeight />
-                    </div>
-                }
-            </Container>
-        </div >)
+            </form>
+            {tipos !== '' &&
+                <div className="tabela">
+                    <DataGrid rows={tipos} columns={columns} autoHeight />
+                </div>
+            }
+        </Container>
+    )
 }
 export default FormularioTipos;

@@ -78,6 +78,7 @@ function FormulariohorarioFuncionamento(props) {
     }, []
     )
     const a = [];
+
     for (const key in erros) {
         a.push(erros[key])
     }
