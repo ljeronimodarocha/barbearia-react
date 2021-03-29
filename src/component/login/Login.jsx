@@ -10,7 +10,7 @@ class Login extends Component {
         super(props);
         this.email = "";
         this.senha = "";
-        this.state = { erros: {} }
+        this.state = { erros: {} };
     }
 
     _handleMudancaEmail(event) {
@@ -26,23 +26,23 @@ class Login extends Component {
         const usuario = new Usuario();
         try {
             const res = await usuario.login(this.email, this.senha);
-            sessionStorage.setItem('jwt', res.headers['authorization'])
+            sessionStorage.setItem('jwt', res.headers['authorization']);
             this.props.logadoChange();
-            return <Redirect to='/agendamentos'  />
+            return <Redirect to='/agendamentos'  />;
         } catch (error) {
             if (error.response) {
-                this.setState({ erros: error.response.data })
+                this.setState({ erros: error.response.data });
             } else if (error.request) {
-                this.setState({ erros: error.request })
+                this.setState({ erros: error.request });
             } else {
-                this.setState({ erros: error })
+                this.setState({ erros: error });
             }
         }
     }
     render() {
         const a = [];
         for (const key in this.state.erros) {
-            a.push(this.state.erros[key])
+            a.push(this.state.erros[key]);
         }
         return (
             <section>

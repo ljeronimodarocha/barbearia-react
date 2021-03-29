@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { TextField, Container, Button } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
 import Alert from '@material-ui/lab/Alert';
-import './estilo.css'
+import './estilo.css';
 import Horarios from '../../api/horarios';
 
 function FormulariohorarioFuncionamento(props) {
@@ -34,53 +34,51 @@ function FormulariohorarioFuncionamento(props) {
             await listaHorarios();
             setDataInicial('');
             setDataFinal('');
-            setErros('')
+            setErros('');
         } catch (error) {
             if (error.response) {
-                setErros(error.response.data)
+                setErros(error.response.data);
                 if (error.response.status === 401) {
                     sessionStorage.clear();
                     props.logadoChange();
                 }
             } else if (error.request) {
-                setErros(error.request)
-
+                setErros(error.request);
             } else {
-                setErros(error)
+                setErros(error);
             }
         }
     }
     const listaHorarios = async () => {
         try {
-            const resposta = await horarios.listaHorarios()
+            const resposta = await horarios.listaHorarios();
             setLista(resposta.data);
         } catch (error) {
             if (error.response) {
-                setErros(error.response.data)
+                setErros(error.response.data);
                 if (error.response.status === 401) {
                     sessionStorage.clear();
                     props.logadoChange();
                 }
             } else if (error.request) {
-                setErros(error.request)
+                setErros(error.request);
 
             } else {
-                setErros(error)
+                setErros(error);
             }
         }
     }
     useEffect(() => {
         async function mostraDados() {
-            await listaHorarios()
+            await listaHorarios();
         }
-        mostraDados()
-
+        mostraDados();
     }, []
     )
     const a = [];
 
     for (const key in erros) {
-        a.push(erros[key])
+        a.push(erros[key]);
     }
     return (
         <Container maxWidth="sm">

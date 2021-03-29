@@ -24,7 +24,7 @@ class Header
                             <li><Link to="/logout">Logout</Link></li>
                             <li><Link to="/agendamentos">Agendamentos</Link></li>
                             <li><Link to="/tipos">Tipos</Link></li>
-                            <li><Link to="/horario-funcionamento">Horarios Livres</Link></li>
+                            <li><Link to="/horario-funcionamento">Horarios De Funcionamento</Link></li>
                         </>
                     }
                 </ul>

@@ -3,9 +3,7 @@ import Tipo from '../../api/tipo';
 import { TextField, Container, Box, Button } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
 import Alert from '@material-ui/lab/Alert';
-import moment from 'moment'
-
-import './FormularioTipos.css'
+import './FormularioTipos.css';
 
 
 function FormularioTipos(props) {
@@ -37,16 +35,15 @@ function FormularioTipos(props) {
             setErros('');
         } catch (error) {
             if (error.response) {
-                setErros(error.response.data)
+                setErros(error.response.data);
                 if (error.response.status === 401) {
                     sessionStorage.clear();
                     props.logadoChange();
                 }
             } else if (error.request) {
-                setErros(error.request)
-
+                setErros(error.request);
             } else {
-                setErros(error)
+                setErros(error);
             }
         }
         setNome("");
@@ -54,21 +51,20 @@ function FormularioTipos(props) {
     }
     const listaTipos = async () => {
         try {
-            const lista = await tipo.listar()
+            const lista = await tipo.listar();
             setTipos(lista.data);
         } catch (error) {
             if (error.response) {
-                setErros(error.response.data)
+                setErros(error.response.data);
                 if (error.response.status === 401) {
                     sessionStorage.clear();
                     props.logadoChange();
                 }
             } else if (error.request) {
-                setErros(error.request)
+                setErros(error.request);
 
             } else {
-                setErros(error)
-
+                setErros(error);
             }
         }
     }

@@ -30,7 +30,7 @@ export default class Usuario {
             email: email,
             senha: senha,
         }).then((res) => {
-            return res
+            return res;
         })
 
     }
