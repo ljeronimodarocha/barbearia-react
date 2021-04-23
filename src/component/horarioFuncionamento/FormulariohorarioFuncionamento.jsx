@@ -10,18 +10,17 @@ function FormulariohorarioFuncionamento(props) {
     const [erros, setErros] = useState('');
     const [dataInicial, setDataInicial] = useState('');
     const [dataFinal, setDataFinal] = useState('');
-    const [teste, setTeste] = useState();
     const horarios = new Horarios();
     const columns = [
         {
             width: 250, field: 'dataInicial', headerName: 'Inicial',
-            valueGetter: (date) => new Date(date.value).toLocaleString('pt-BR'),
+            valueGetter: (date) => new Date(date.value).toLocaleString('pt-BR', {timeZone:"UTC"}),
         },
         {
             field: 'dataFinal',
             headerName: 'Final',
             width: 250,
-            valueGetter: (date) => new Date(date.value).toLocaleString('pt-BR'),
+            valueGetter: (date) => new Date(date.value).toLocaleString('pt-BR', {timeZone:"UTC"}),
 
         },
     ]
