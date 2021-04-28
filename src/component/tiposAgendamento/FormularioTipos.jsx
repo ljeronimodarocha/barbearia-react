@@ -69,7 +69,7 @@ function FormularioTipos(props) {
         }
     }
 
-    useEffect(async () => {
+    useEffect(() => {
         async function lista() {
             await listaTipos();
         }

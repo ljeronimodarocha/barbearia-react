@@ -16,7 +16,6 @@ class ListaAgendamentos extends Component {
         try {
             const lista = await agendamento.listaAgendamentos();
             this.setState({ lista: [lista] })
-            console.log(this.state.lista);
         } catch (error) {
             if (error.response) {
                 this.setState({ erros: error.response.data })
@@ -70,15 +69,13 @@ class ListaAgendamentos extends Component {
                     <><Alert severity="error">{value}</Alert></>
                 );
             })}
-        <FormularioAgendamento />
-
-
+            <FormularioAgendamento logadoChange={this.props.logadoChange} />
+            
             {this.state.lista &&
                 <div className="tabela">
                     <DataGrid rows={this.state.lista} columns={columns} autoHeight />
                 </div>
             }
-
         </div>
     }
 }

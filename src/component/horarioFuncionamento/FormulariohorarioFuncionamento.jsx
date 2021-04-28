@@ -29,7 +29,7 @@ function FormulariohorarioFuncionamento(props) {
         try {
             // const resposta = await horarios.cadastraHorarios(`${dataInicial}:00`.replaceAll('T', ' '),
             //     `${dataFinal}:00`.replaceAll('T', ' '));
-            const resposta = await horarios.cadastraHorarios(dataInicial, dataFinal);
+            await horarios.cadastraHorarios(dataInicial, dataFinal);
             await listaHorarios();
             setDataInicial('');
             setDataFinal('');
