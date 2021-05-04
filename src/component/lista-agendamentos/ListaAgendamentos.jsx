@@ -10,12 +10,14 @@ class ListaAgendamentos extends Component {
     constructor(props) {
         super(props);
         this.state = { lista: [], erros: [] }
+        this.buscaLista = this.buscaLista.bind(this)
     }
-    async componentDidMount() {
-        const agendamento = new Agendamento();
+
+    async buscaLista() {
         try {
+            const agendamento = new Agendamento();
             const lista = await agendamento.listaAgendamentos();
-            this.setState({ lista: [lista] })
+            this.setState({ lista: lista })
         } catch (error) {
             if (error.response) {
                 this.setState({ erros: error.response.data })
@@ -32,17 +34,20 @@ class ListaAgendamentos extends Component {
 
         }
     }
+    async componentDidMount() {
+        await this.buscaLista();
+    }
     render() {
         const columns = [
             {
                 width: 250, field: 'dataInicial', headerName: 'Data Inicial',
-                valueGetter: (date) => new Date(date.value).toLocaleString('pt-BR', {timeZone:"UTC"}),
+                valueGetter: (date) => new Date(date.value).toLocaleString('pt-BR', { timeZone: "UTC" }),
             },
             {
                 field: 'dataFinal',
                 headerName: 'Data Final',
                 width: 250,
-                valueGetter: (date) => new Date(date.value).toLocaleString('pt-BR', {timeZone:"UTC"}),
+                valueGetter: (date) => new Date(date.value).toLocaleString('pt-BR', { timeZone: "UTC" }),
 
             },
             {
@@ -57,7 +62,7 @@ class ListaAgendamentos extends Component {
                 width: 250,
                 valueGetter: (data) => data.row.Usuario.email,
             },
-            
+
         ]
         const a = [];
         for (const key in this.state.erros) {
@@ -69,8 +74,8 @@ class ListaAgendamentos extends Component {
                     <><Alert severity="error">{value}</Alert></>
                 );
             })}
-            <FormularioAgendamento logadoChange={this.props.logadoChange} />
-            
+            <FormularioAgendamento logadoChange={this.props.logadoChange} updateList={this.buscaLista} />
+
             {this.state.lista &&
                 <div className="tabela">
                     <DataGrid rows={this.state.lista} columns={columns} autoHeight />

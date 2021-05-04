@@ -1,31 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Container, TextField } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Alert from '@material-ui/lab/Alert';
 import Tipo from '../../api/tipo';
+import Agendamento from '../../api/agendamento'
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-
-
-
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 220,
-    },
-
-}));
+import Button from '@material-ui/core/Button';
+import './estilo.css';
 
 function FormularioAgendamento(props) {
-    const classes = useStyles();
     const [dataInicial, setDataInicial] = useState('');
     const [tipos, setTipos] = useState([]);
     const [erros, setErros] = useState([]);
     const [corte, setCorte] = useState('');
 
     const tipo = new Tipo();
+    const agendamento = new Agendamento()
     const listaTipos = async () => {
         try {
             const resultado = await tipo.listar();
@@ -45,10 +37,26 @@ function FormularioAgendamento(props) {
             }
         }
     }
-    const handleChangeCorte = (event) => {
-        setCorte(event.target.value);
-        console.log(event.target.value);
-    };
+    
+    const enviar = async (event) => {
+        event.preventDefault();
+        try {
+            const resultado = await agendamento.cadastrar(dataInicial.replace('T', ' '), corte);
+            props.updateList();
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 401) {
+                    setErros(error.response.data);
+                    sessionStorage.clear();
+                    props.logadoChange();
+                }
+            } else if (error.request) {
+                setErros(error.request);
+            } else {
+                setErros(error);
+            }
+        }
+    }
     useEffect(() => {
         listaTipos();
     }, [])
@@ -68,26 +76,27 @@ function FormularioAgendamento(props) {
                     );
                 })
             }
-            <form action="">
+            <form action="" onSubmit={e => { enviar(e) }}>
                 <div className="formularioHorarios">
                     <TextField id="dataInicial" label="Inicial" type="datetime-local" InputLabelProps={{
                         shrink: true,
                     }} value={dataInicial} onChange={e => setDataInicial(e.target.value)} />
-                    <FormControl className={classes.formControl}>
+                    <FormControl className="formControl">
                         <InputLabel id="corte">Selecione um corte</InputLabel>
                         <Select
                             labelId="corte"
                             id="corte"
                             value={corte}
-                            onChange={handleChangeCorte}
-
+                            onChange={event => { setCorte(event.target.value) }}
                         >
                             {tipos.map((tipo) => {
                                 return <MenuItem key={tipo.id} value={tipo.id}>{tipo.nome}</MenuItem>
                             })}
                         </Select>
-
                     </FormControl >
+                    <Button variant="contained" type="submit" className="btnAdicionar" color="primary">
+                        Adicionar
+                    </Button>
                 </div>
 
             </form>

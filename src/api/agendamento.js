@@ -17,7 +17,17 @@ export default class Agendamento {
         }).then((res) => {
             return res.data;
         })
-
+    }
+    async cadastrar(dataInicial, corteId) {
+        return await this.instance.post('agendamentos', {
+            dataInicial: dataInicial,
+            tipo: corteId
+        }).then((res) => {
+            return res;
+        }).catch((err) => {
+            console.log("AXIOS ERROR: ", err);
+            return err;
+        })
     }
 
 }
