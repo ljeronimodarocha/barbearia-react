@@ -24,9 +24,6 @@ export default class Agendamento {
             tipo: corteId
         }).then((res) => {
             return res;
-        }).catch((err) => {
-            console.log("AXIOS ERROR: ", err);
-            return err;
         })
     }
 

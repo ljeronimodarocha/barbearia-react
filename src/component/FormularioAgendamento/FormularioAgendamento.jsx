@@ -37,10 +37,11 @@ function FormularioAgendamento(props) {
             }
         }
     }
-    
+
     const enviar = async (event) => {
         event.preventDefault();
         try {
+            //debugger
             const resultado = await agendamento.cadastrar(dataInicial.replace('T', ' '), corte);
             props.updateList();
         } catch (error) {
@@ -49,12 +50,16 @@ function FormularioAgendamento(props) {
                     setErros(error.response.data);
                     sessionStorage.clear();
                     props.logadoChange();
+                } else {
+                    setErros(error.response.data);
+                    console.log(error.response.data);
                 }
             } else if (error.request) {
                 setErros(error.request);
             } else {
                 setErros(error);
             }
+
         }
     }
     useEffect(() => {
@@ -69,12 +74,8 @@ function FormularioAgendamento(props) {
     }
     return (
         <Container maxWidth="sm">
-            {erros !== '' &&
-                a.map((value) => {
-                    return (
-                        <><Alert severity="error">{value}</Alert></>
-                    );
-                })
+            {erros.length > 1 &&
+                <><Alert severity="error">{erros}</Alert></>
             }
             <form action="" onSubmit={e => { enviar(e) }}>
                 <div className="formularioHorarios">
